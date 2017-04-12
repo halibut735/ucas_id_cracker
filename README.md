@@ -1,2 +1,2 @@
 # ucas_id_cracker
-crack the ucas id with default passwd
+crack the ucas ids with default password
