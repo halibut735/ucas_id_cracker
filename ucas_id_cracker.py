@@ -50,7 +50,7 @@ def main():
             if res:
                 json_data = json.loads(res)
                 if json_data and json_data.has_key('result') and json_data['result']=='success':
-                    print 'Login with ID: ',num,'\npassword: ',default_passwd,'\nNB !!!!'
+                    print 'Login with ID: ',num,'\npassword: ', passwd,'\nNB !!!!'
                     return
 
 
